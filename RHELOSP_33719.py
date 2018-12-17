@@ -1,6 +1,6 @@
 from check_gnocchi_service import *
 
-def RHELOSP_33718_test():
+def RHELOSP_33719_test():
     res = 1, ''
 
     #Test the docker processes
@@ -17,9 +17,9 @@ def RHELOSP_33718_test():
     return 0
 
 if __name__ == "__main__":
-    res = RHELOSP_33718_test()
+    res = RHELOSP_33719_test()
     if res == 0:
-        print("RHELOSP_33718 Finished successfully")
+        print("RHELOSP_33719 Finished successfully")
     else:
-        print("RHELOSP_33718 failed")
+        print("RHELOSP_33719 failed")
     sys.exit(res)
