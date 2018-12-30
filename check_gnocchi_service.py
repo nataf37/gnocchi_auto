@@ -781,7 +781,8 @@ def list_resources():
                     print line
                 return 0, ''
             else:
-                if len(out) == 4:
+                if len(out) < 5:
+                    print len(out)
                     for line in out:
                         print line
                     print 'The list is empty'
