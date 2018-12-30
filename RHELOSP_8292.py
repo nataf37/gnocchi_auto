@@ -4,7 +4,7 @@ def RHELOSP_8292_test():
     out = 1
 
     out = list_resources()
-    if out != 0:
+    if out[0] != 0:
         print("The resource list is empty!")
         return 1
 
