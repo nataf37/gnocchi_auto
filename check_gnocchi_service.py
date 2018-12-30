@@ -778,13 +778,14 @@ def list_resources():
             out = output.splitlines()
             if len(out) > 4:
                 for line in out:
-                    print line
+                    print('Output is OK')
+                    print(line)
                 return 0, ''
             else:
                 if len(out) < 5:
                     print ('Too short output:', len(out))
                     for line in out:
-                        print line
+                        print(line)
                     print 'The list is empty'
                     return 1, 'Empty'
                 else:
