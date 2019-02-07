@@ -1,4 +1,4 @@
-from check_gnocchi_service import *
+from gnocchi_auto.check_gnocchi_service import *
 
 def RHELOSP_34681_test():
     res = 1
@@ -27,7 +27,7 @@ def RHELOSP_34681_test():
     if res[0] != 0:
         return 1
     else:
-        print "Found demo metrics under admin!"
+        print ("Found demo metrics under admin!")
         res = 0
 
     return 0
