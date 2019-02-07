@@ -3,7 +3,7 @@ import os
 import subprocess
 import time
 import fileinput
-from definitions import *
+from gnocchi_auto.definitions import *
 import sys
 #from numpy.random import random
 
@@ -34,7 +34,7 @@ def create_new_resource(resource_type, resource_name=""):
 
         (res, metric_id) = resource_exists('server', resource_name)
         if res == 0:
-            print "Instance %s already exists" % resource_name
+            print ("Instance %s already exists" % resource_name)
             return 0, metric_id
 
         # build image
@@ -90,7 +90,7 @@ def create_new_resource(resource_type, resource_name=""):
 
             (res, metric_id) = resource_exists('image', resource_name)
             if res == 0:
-                print "Image %s already exists" % resource_name
+                print("Image %s already exists" % resource_name)
                 return 0, metric_id
 
             print("openstack image create --disk-format qcow2 --container-format bare --public --file %s %s" % (
@@ -110,7 +110,7 @@ def create_new_resource(resource_type, resource_name=""):
                         if "id" in line:
                             id_arr = line.split('|')
                             metric_id = id_arr[2].strip()
-                            print "Here is the id: %s" % metric_id
+                            print ("Here is the id: %s" % metric_id)
                             return 0, metric_id
                     return 1, ''
             else:
@@ -123,7 +123,7 @@ def create_new_resource(resource_type, resource_name=""):
 
         (res, metric_id) = resource_exists('flavor', resource_name)
         if res == 0:
-            print "Flavor %s already exists" % resource_name
+            print ("Flavor %s already exists" % resource_name)
             return 0, metric_id
 
         p = subprocess.Popen(
@@ -155,7 +155,7 @@ def create_new_resource(resource_type, resource_name=""):
 
         (res, metric_id) = resource_exists('volume', resource_name)
         if res == 0:
-            print "Volume %s already exists" % resource_name
+            print ("Volume %s already exists" % resource_name)
             return 0, metric_id
 
         p = subprocess.Popen("openstack volume create --size 2 %s" % resource_name, stdout=subprocess.PIPE,
@@ -182,7 +182,7 @@ def create_new_resource(resource_type, resource_name=""):
 
         (res, metric_id) = resource_exists('network', resource_name)
         if res == 0:
-            print "Network %s already exists" % resource_name
+            print ("Network %s already exists" % resource_name)
             return 0, metric_id
 
         p = subprocess.Popen("openstack network create %s" % resource_name, stdout=subprocess.PIPE,
@@ -213,7 +213,7 @@ def get_resource_id(type, name):
     res = 1
     ind=""
     l = "openstack %s list"%type
-    print l
+    print (l)
     p = subprocess.Popen(l, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err is None:
@@ -238,7 +238,7 @@ def find_metrics(user_id, type):
     res = 1
     type_found=False
     l = "openstack metric resource list"
-    print l
+    print (l)
     p = subprocess.Popen(l, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err is None:
@@ -250,17 +250,17 @@ def find_metrics(user_id, type):
                 type_found = True
                 if type in line:
                     if user_id in line:
-                        print line
+                        print (line)
                         return 0, 'Found'
 
             if type_found:
                 return 0, 'Not found'
             else:
-                print "Didn't find the type %s in resource list!"%type
+                print ("Didn't find the type %s in resource list!"%type)
                 return 1, ''
 
     else:
-        print err
+        print (err)
         return 1, ''
 
 
@@ -323,7 +323,7 @@ def ceilometer_event_list():
             for line in output.splitlines():
                 print(line)
                 if event_name in line:
-                    print 'Event %s found!' % event_name
+                    print ('Event %s found!' % event_name)
                     return 0, ''
             print("Didn't find %s in the list" % event_name)
             return 1, ''
@@ -400,7 +400,7 @@ def ceilometer_filter_by_event_type(event_name):
 
 def event_show(event_name):
     printline = "ceilometer event-list -q 'event_type=%s'" % event_name
-    print printline
+    print (printline)
     p = subprocess.Popen(printline, stdout=subprocess.PIPE, shell=True)
     (output1, err1) = p.communicate()
     if err1 is None:
@@ -554,7 +554,7 @@ def check_openstack_event_type_list(event_name="image.update"):
             for line in output.splitlines():
                 print(line)
                 if event_name in line:
-                    print 'Event type %s found!' % event_name
+                    print ('Event type %s found!' % event_name)
                     return 0, ''
             print("Didn't find %s in the list" % event_name)
             return 1, ''
@@ -576,7 +576,7 @@ def check_openstack_trait_list():
             for line in output.splitlines():
                 print(line)
                 if trait_name in line:
-                    print 'Trait type %s found in %s!' % (trait_name, event_name)
+                    print ('Trait type %s found in %s!' % (trait_name, event_name))
                     return 0, ''
             print("Didn't find %s in the list" % event_name)
             return 1, ''
@@ -767,7 +767,7 @@ def find_resource_by_id(resource_id):
 
 def list_resources():
     resource_list = []
-    print "openstack metric resource list"
+    print ("openstack metric resource list")
     p = subprocess.Popen("openstack metric resource list", stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err is None:
@@ -784,16 +784,16 @@ def list_resources():
                 if len(out) == 4:
                     for line in out:
                         print(line)
-                    print 'The list is empty'
+                    print ('The list is empty')
                     return 1, 'Empty'
                 else:
-                    print "Problem with openstack metric resource list"
+                    print ("Problem with openstack metric resource list")
                     return 1, ''
 
 
 
 def check_field(field, value):
-    print 'openstack %s list'%field
+    print ('openstack %s list'%field)
     p = subprocess.Popen("openstack %s list"%field, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT, shell=True)
     (output, err) = p.communicate()
@@ -806,9 +806,9 @@ def check_field(field, value):
             for line in output.splitlines():
                 # print(line)
                 if value in line:
-                    print 'There is already a %s named %s'%(field, value)
+                    print ('There is already a %s named %s'%(field, value))
                     return 0, 'Got'
-        print 'There is no %s named %s' % (field, value)
+        print ('There is no %s named %s' % (field, value))
         return 0,''
 
     else:
@@ -839,9 +839,9 @@ def build_field(field, value):
                 # print(line)
                 if "name" in l:
                     if value in l:
-                        print 'Created %s named %s'%(field, value)
+                        print ('Created %s named %s'%(field, value))
                         return 0, ''
-        print 'Could not create a %s named %s' % (field, value)
+        print ('Could not create a %s named %s' % (field, value))
         return 1,''
 
     else:
@@ -871,9 +871,9 @@ def build_field_10(field, value):
                 # print(line)
                 if "name" in l:
                     if value in l:
-                        print 'Created %s named %s'%(field, value)
+                        print ('Created %s named %s'%(field, value))
                         return 0, ''
-        print 'Could not create a %s named %s' % (field, value)
+        print ('Could not create a %s named %s' % (field, value))
         return 1,''
 
     else:
@@ -899,18 +899,18 @@ def add_role(project, user, role):
 
 def check_aodh_alarm(outline):
     counter = 0
-    print 'Enter aodh_list'
+    print ('Enter aodh_list')
     max_counter = len(aodh_alarm_list)
     for aodh_line in aodh_alarm_list:
         if aodh_line in outline:
-            print "Found %s" % aodh_line
+            print ("Found %s" % aodh_line)
             counter = counter + 1
         else:
-            print outline
+            print (outline)
             print("Didn't find %s in the list" % aodh_line)
             return False
     if counter == max_counter:
-        print "The list is full"
+        print ("The list is full")
         return True
 
 
@@ -932,17 +932,17 @@ def check_aodh_alarm_list(extracted_alarm):
             for line in output.splitlines():
                 # print(line)
                 if extracted_alarm in line:
-                    print 'This alarm: %s is not supposed to be in the list!' % extracted_alarm
+                    print ('This alarm: %s is not supposed to be in the list!' % extracted_alarm)
                     return 1, ''
 
                 if 'invalid choice' in line:
-                    print line
+                    print (line)
                     res1 = check_aodh_alarm(line)
                     if res1:
                         print("The aodh list os full, %s is not in it" % extracted_alarm)
                         return 0, ''
 
-            print "Didn't find the list"
+            print ("Didn't find the list")
             return 1, ''
     else:
         print("There was a problem with aodh list", err)
@@ -1004,16 +1004,16 @@ def create_aodh_alarm(alarm_type, threshold, metrics):
                 if 'alarm_id' in line:
                     id_arr = line.split('|')
                     metric_id = id_arr[2].strip()
-                    print 'Alarm user id is %s!' % metric_id
+                    print ('Alarm user id is %s!' % metric_id)
                     return 0, metric_id
-            print "Didn't find user_id in the alarm description"
+            print ("Didn't find user_id in the alarm description")
             return 1, ''
-    print "There was a problem with alarm creation: %" % err
+    print ("There was a problem with alarm creation: %" % err)
     return 1, ''
 
 
 def create_aodh_composition_alarm(id1, id2):
-    print "aodh alarm create \
+    print ("aodh alarm create \
     --type combination \
     --name 'AClient-Combination-1' \
     --description 'AodhClient-Combination-Alarm' \
@@ -1025,7 +1025,7 @@ def create_aodh_composition_alarm(id1, id2):
     --repeat-actions True \
     --operator or \
     --alarm_ids %s \
-    --alarm_ids %s" % (id1, id2)
+    --alarm_ids %s" % (id1, id2))
 
     p = subprocess.Popen("aodh alarm create \
     --type combination \
@@ -1052,11 +1052,11 @@ def create_aodh_composition_alarm(id1, id2):
             for line in output.splitlines():
                 print(line)
                 if 'invalid choice' in line:
-                    print 'Combination alarm in not in the list!'
+                    print ('Combination alarm in not in the list!')
                     return 0
-            print "Wrong error type, check it please"
+            print ("Wrong error type, check it please")
             return 1
-    print "There was a problem with aodh command: %" % err
+    print ("There was a problem with aodh command: %" % err)
     return 1
 
 
@@ -1134,7 +1134,7 @@ def get_measures(resource_id, metric_name, aggregation_type=''):
                 else:
                     if '201' in line:
                         print ('Measures found:')
-                        print line
+                        print (line)
                         return 0, line
     print("Problem getting measures for %s" % resource_id)
     return 1,err
@@ -1303,7 +1303,7 @@ def edit_pipeline(pipeline_file, edit_fields):
                 if processing_source:
                     print(edit_fields)
                     processing_source = False
-            print line,
+            print (line,)
     else:
         print("Cannot open %s" % pipeline_file)
     return 0
@@ -1327,14 +1327,14 @@ def edit_source(source_file, edit_fields):
                 if processing_source:
                     print(edit_fields)
                     processing_source = False
-            print line,
+            print (line,)
     else:
         print("Cannot open %s" % pipeline_file)
     return 0
 
 def check_conf_file(conf_file, field, value):
     res = 1
-    print conf_file
+    print (conf_file)
     if os.path.isfile(conf_file):
         print ("Opening the file: %s"%conf_file)
         f = open(conf_file, 'r+')
@@ -1354,7 +1354,7 @@ def check_conf_file(conf_file, field, value):
 def check_docker_conf_file(service, file, field, value):
     res = 1
     input = "sudo docker exec -ti %s cat %s | grep %s"%(service, file, field)
-    print input
+    print (input)
     p = subprocess.Popen(input, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err is None:
@@ -1372,7 +1372,7 @@ def copy_file(orig, copied):
     #cp opig copied
 
     line = 'cp %s %s'%(orig, copied)
-    print line
+    print (line)
     p = subprocess.Popen(line, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err != None:
@@ -1387,7 +1387,7 @@ def change_file(file, field, value):
     #sed -n -e '/POP3_SERVER_NAME/ s/.*\= *//p' test.dat
     #sed -i 's/original/new/g' file.txt
     line = "sed -n -e '/%s/ s/.*\= *//p' %s"%(field, file)
-    print line
+    print (line)
     p = subprocess.Popen(line, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err != None:
@@ -1397,7 +1397,7 @@ def change_file(file, field, value):
         old_value = output.splitlines()[0]
 
     line = "sed -i 's/%s/%s/g' %s"%(old_value, value, file)
-    print line
+    print (line)
     p = subprocess.Popen(line, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err != None:
@@ -1408,7 +1408,7 @@ def change_file(file, field, value):
 def switch_context(context):
     res = 1
     line = "source %s"%context
-    print line
+    print (line)
     p = subprocess.Popen(line, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err != None:
@@ -1481,7 +1481,7 @@ import os
 
 def check_log(logfile, line_to_find):
     res = 1
-    print logfile
+    print (logfile)
     if os.path.isfile(logfile):
         print ("Opening the file: %s"%logfile)
         f = open(logfile, 'r+')
@@ -1547,19 +1547,19 @@ def started_as_root():
 
 
 def runing_with_root_privileges():
-    print 'i am root'
+    print ('i am root')
 
 
 def runing_as_user():
-    print 'i am not root'
+    print ('i am not root')
 
 
 def change_to_root():
     if started_as_root():
-        print 'calling the function under root'
+        print ('calling the function under root')
         runing_with_root_privileges()
     else:
-        print "Need to change to root"
+        print ("Need to change to root")
         current_script = os.path.realpath(__file__)
         os.system('echo %s|sudo -S python %s' % (password_for_sudo, current_script))
 

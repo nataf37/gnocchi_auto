@@ -1,4 +1,7 @@
-from check_gnocchi_service import *
+from gnocchi_auto.check_gnocchi_service import check_docker_process
+
+#from check_gnocchi_service import check_docker_process
+
 import sys
 
 #TODO First switch to instance you need to check
@@ -6,7 +9,7 @@ def RHELOSP_24696_test(cloud):
     out = 1
 
     if cloud == "over":
-        out = check_system_process("ceilometer-polling")
+        out = check_docker_process ("ceilometer_agent_ipmi")
         if out != 0:
             print("Ceilometer-polling service is not running!")
             return 1
@@ -14,14 +17,14 @@ def RHELOSP_24696_test(cloud):
             print("Ceilometer-polling service is running!")
 
     if cloud == "under":
-        out = check_system_process("ceilometer-central")
+        out = check_docker_process("ceilometer_agent_notification")
         if out != 0:
             print("Ceilometer-central service is not running!")
             return 1
         else:
             print("Ceilometer-central service is running!")
 
-    out = check_system_process("ceilometer-notification")
+    out = check_docker_process("ceilometer-notification")
     if out != 0:
         print("Ceilometer-notification service is not running!")
         return 1
