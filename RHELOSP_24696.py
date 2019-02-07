@@ -9,7 +9,7 @@ def RHELOSP_24696_test(cloud):
     out = 1
 
     if cloud == "over":
-        out = check_docker_process ("ceilometer_agent_ipmi")
+        out = check_docker_process ("ceilometer-ipmi")
         if out != 0:
             print("Ceilometer-polling service is not running!")
             return 1
@@ -17,7 +17,7 @@ def RHELOSP_24696_test(cloud):
             print("Ceilometer-polling service is running!")
 
     if cloud == "under":
-        out = check_docker_process("ceilometer_agent_notification")
+        out = check_docker_process("ceilometer-central")
         if out != 0:
             print("Ceilometer-central service is not running!")
             return 1
