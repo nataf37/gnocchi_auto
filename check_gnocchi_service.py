@@ -3,7 +3,7 @@ import os
 import subprocess
 import time
 import fileinput
-from gnocchi_auto.definitions import *
+from definitions import *
 import sys
 #from numpy.random import random
 

@@ -1,4 +1,4 @@
-from gnocchi_auto.check_gnocchi_service import *
+from check_gnocchi_service import *
 
 def RHELOSP_34681_test():
     res = 1
