@@ -1,4 +1,4 @@
-from gnocchi_auto.check_gnocchi_service import check_docker_process
+from check_gnocchi_service import check_docker_process
 
 #from check_gnocchi_service import check_docker_process
 
