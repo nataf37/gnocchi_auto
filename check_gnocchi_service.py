@@ -463,12 +463,11 @@ def gnocchi_archive_policy_create(event_name):
             return 1, ''
         else:
             res = 0
-            for line1 in output1.splitlines():
-                print(line1)
-                for arch_line in archive_policy_check:
-                    if arch_line in line1:
-                        # print('Line %s exists'%arch_line)
-                        res += 1
+            for line_output in output1.splitlines():
+                print (line_output)
+                if "points" in line_output:
+                # print('Line %s exists'%arch_line)
+                    res += 1
             if res == len(archive_policy_check):
                 print('All the lines exist')
                 return 0, ''
