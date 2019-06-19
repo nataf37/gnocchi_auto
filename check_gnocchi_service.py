@@ -376,8 +376,8 @@ def ceilometer_event_show():
 
 
 def ceilometer_filter_by_event_type(event_name):
-    print("ceilometer event-list -q 'event_type=%s'" % event_name)
-    p = subprocess.Popen("ceilometer event-list -q 'event_type=%s'" % event_name, stdout=subprocess.PIPE, shell=True)
+    print("openstack event show 'event_type=%s'" % event_name)
+    p = subprocess.Popen("openstack event show 'event_type=%s'" % event_name, stdout=subprocess.PIPE, shell=True)
     (output1, err1) = p.communicate()
     if err1 is None:
         if "Missing value" in output1:
