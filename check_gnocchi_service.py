@@ -311,7 +311,7 @@ def resource_exists(resource_type, resource_name):
 
 
 def ceilometer_event_list():
-    print("ceilometer event-list")
+    print("openstack event list")
     event_name = "identity.domain.created"
     p = subprocess.Popen("ceilometer event-list", stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
