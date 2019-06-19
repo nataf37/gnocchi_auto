@@ -427,8 +427,8 @@ def event_show(event_name):
 
 def ceilometer_filter_by_trait(event_name, trait='service'):
 
-    print('ceilometer trait-list  -e %s -t %s' % (event_name, trait))
-    p = subprocess.Popen('ceilometer trait-list  -e %s -t %s' % (event_name, trait), stdout=subprocess.PIPE, shell=True)
+    print('openstack event trait list %s -t %s' % (event_name, trait))
+    p = subprocess.Popen('openstack event trait list %s  %s' % (event_name, trait), stdout=subprocess.PIPE, shell=True)
     (output1, err1) = p.communicate()
     if err1 is None:
         if "Missing value" in output1:
