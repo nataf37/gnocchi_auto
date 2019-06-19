@@ -4,7 +4,7 @@ def RHELOSP_27782_test():
     out = 1
 
     for aodh_process in aodh_process_list:
-        out = check_docker_process(aodh_process)
+        out = check_podman_process(aodh_process)
         if out == 0:
             print("%s service is running!"% aodh_process)
             out = 0

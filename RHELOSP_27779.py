@@ -4,7 +4,7 @@ def RHELOSP_27779_test():
     out = 1
 
     for panko_process in panko_process_list:
-        out = check_docker_process(panko_process)
+        out = check_podman_process(panko_process)
         if out == 0:
             print("%s service is running!"% panko_process)
             out = 0

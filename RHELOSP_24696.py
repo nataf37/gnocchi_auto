@@ -1,6 +1,6 @@
-from check_gnocchi_service import check_docker_process
+from check_gnocchi_service import check_podman_process
 
-#from check_gnocchi_service import check_docker_process
+#from check_gnocchi_service import check_podman_process
 
 import sys
 
@@ -9,7 +9,7 @@ def RHELOSP_24696_test(cloud):
     out = 1
 
     if cloud == "over":
-        out = check_docker_process ("ceilometer-ipmi")
+        out = check_podman_process ("ceilometer-ipmi")
         if out != 0:
             print("Ceilometer-polling service is not running!")
             return 1
@@ -17,14 +17,14 @@ def RHELOSP_24696_test(cloud):
             print("Ceilometer-polling service is running!")
 
     if cloud == "under":
-        out = check_docker_process("ceilometer-central")
+        out = check_podman_process("ceilometer-central")
         if out != 0:
             print("Ceilometer-central service is not running!")
             return 1
         else:
             print("Ceilometer-central service is running!")
 
-    out = check_docker_process("ceilometer-notification")
+    out = check_podman_process("ceilometer-notification")
     if out != 0:
         print("Ceilometer-notification service is not running!")
         return 1

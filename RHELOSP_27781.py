@@ -4,7 +4,7 @@ def RHELOSP_27781_test():
     out = 1
 
     for ceilometer_process in ceilometer_process_list:
-        out = check_docker_process(ceilometer_process)
+        out = check_podman_process(ceilometer_process)
         if out == 0:
             print("%s service is running!"% ceilometer_process)
             out = 0

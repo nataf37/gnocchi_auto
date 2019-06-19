@@ -1159,8 +1159,8 @@ def check_process(process_name):
         return 1
 
 
-def check_docker_process(process_name):
-    p = subprocess.Popen('sudo docker ps | grep %s' % process_name, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+def check_podman_process(process_name):
+    p = subprocess.Popen('sudo podman ls | grep %s' % process_name, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                          shell=True)
     (output, err) = p.communicate()
     if err is None:

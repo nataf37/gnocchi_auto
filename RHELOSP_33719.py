@@ -9,7 +9,7 @@ def RHELOSP_33719_test():
     for pr in processes_list:
         print("Checking that %s processes run" % (pr))
 
-        res = check_docker_process(pr)
+        res = check_podman_process(pr)
         if res == 0:
             print ("The process %s exists!"%pr)
             return 1

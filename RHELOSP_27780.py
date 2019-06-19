@@ -4,7 +4,7 @@ def RHELOSP_27780_test():
     out = 1
 
     for gnocchi_process in gnocchi_process_list:
-        out = check_docker_process(gnocchi_process)
+        out = check_podman_process(gnocchi_process)
         if out == 0:
             print("%s service is running!"% gnocchi_process)
             out = 0
