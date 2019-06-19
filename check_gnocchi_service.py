@@ -313,7 +313,7 @@ def resource_exists(resource_type, resource_name):
 def ceilometer_event_list():
     print("openstack event list")
     event_name = "identity.domain.created"
-    p = subprocess.Popen("ceilometer event-list", stdout=subprocess.PIPE, shell=True)
+    p = subprocess.Popen("openstack event list", stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err is None:
         if "Missing value" in output:
