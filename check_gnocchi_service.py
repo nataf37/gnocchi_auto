@@ -332,9 +332,9 @@ def ceilometer_event_list():
 
 
 def ceilometer_event_show():
-    print("ceilometer event-list")
+    print("openstack event list")
     event_name = "identity.domain.created"
-    p = subprocess.Popen("ceilometer event-list", stdout=subprocess.PIPE, shell=True)
+    p = subprocess.Popen("openstack event list", stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err is None:
         if "Missing value" in output:
@@ -348,8 +348,8 @@ def ceilometer_event_show():
                     metric_id = id_arr[1].strip()
                     print("Resource id is %s" % metric_id)
 
-                    print("ceilometer event-show %s" % metric_id)
-                    p = subprocess.Popen("ceilometer event-show %s" % metric_id, stdout=subprocess.PIPE, shell=True)
+                    print("openstack event show %s" % metric_id)
+                    p = subprocess.Popen("openstack event show %s" % metric_id, stdout=subprocess.PIPE, shell=True)
                     (output1, err1) = p.communicate()
                     if err1 is None:
                         if "Missing value" in output1:
