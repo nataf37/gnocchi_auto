@@ -542,8 +542,8 @@ def gnocchi_archive_policy_show(event_name):
 
 
 def check_openstack_event_type_list(event_name="image.update"):
-    print("ceilometer event-type-list")
-    p = subprocess.Popen("ceilometer event-type-list", stdout=subprocess.PIPE, shell=True)
+    print("openstack event type list")
+    p = subprocess.Popen("openstack event type list", stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err is None:
         if "Missing value" in output:
