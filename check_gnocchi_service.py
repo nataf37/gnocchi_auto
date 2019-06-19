@@ -563,9 +563,9 @@ def check_openstack_event_type_list(event_name="image.update"):
 
 def check_openstack_trait_list():
     event_name = "volume.create.start"
-    print("ceilometer trait-description-list -e %s" % event_name)
+    print("openstack event trait description %s" % event_name)
     trait_name = "created_at"
-    p = subprocess.Popen("ceilometer trait-description-list -e %s" % event_name, stdout=subprocess.PIPE, shell=True)
+    p = subprocess.Popen("openstack event trait description %s" % event_name, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     if err is None:
         if "Missing value" in output:
