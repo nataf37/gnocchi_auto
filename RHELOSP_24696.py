@@ -8,21 +8,20 @@ import sys
 def RHELOSP_24696_test(cloud):
     out = 1
 
-    if cloud == "over":
-        out = check_podman_process ("ceilometer-ipmi")
-        if out != 0:
-            print("Ceilometer-polling service is not running!")
-            return 1
-        else:
-            print("Ceilometer-polling service is running!")
+    out = check_podman_process ("ceilometer-ipmi")
+    if out != 0:
+        print("Ceilometer-polling service is not running!")
+        return 1
+    else:
+        print("Ceilometer-polling service is running!")
 
-    if cloud == "under":
-        out = check_podman_process("ceilometer-central")
-        if out != 0:
-            print("Ceilometer-central service is not running!")
-            return 1
-        else:
-            print("Ceilometer-central service is running!")
+
+    out = check_podman_process("ceilometer-central")
+    if out != 0:
+        print("Ceilometer-central service is not running!")
+        return 1
+    else:
+        print("Ceilometer-central service is running!")
 
     out = check_podman_process("ceilometer-notification")
     if out != 0:
@@ -35,7 +34,8 @@ def RHELOSP_24696_test(cloud):
 
 if __name__ == "__main__":
     #Arguement is "under" or "over"
-    if  len(sys.argv) > 1:
+
+    if len(sys.argv) > 1:
         res = RHELOSP_24696_test(sys.argv[1])
     else:
         res = 1
